@@ -10,6 +10,4 @@ urlpatterns = [
     path('login/',LoginView.as_view(), name='user_login'),
     path('logout/', LogoutView.as_view(), name='user_logout'),
     path('<str:username>/', ProfileView.as_view(), name='user_profile'),
-    path("admin/signup/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

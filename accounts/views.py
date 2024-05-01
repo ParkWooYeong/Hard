@@ -28,7 +28,7 @@ class AccountsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class signupView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny] #접근 권한
     def get(self, request):
         users = CustomUser.objects.all()
         serializer = UserSerializer(users, many=True)
