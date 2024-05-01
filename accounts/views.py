@@ -2,8 +2,9 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -29,10 +30,6 @@ class AccountsView(APIView):
 
 class signupView(APIView):
     permission_classes = [AllowAny] #접근 권한
-    def get(self, request):
-        users = CustomUser.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
     
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -48,16 +45,25 @@ class LoginView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({"message": "로그인 성공"}, status=status.HTTP_200_OK)
+            
+            # 토큰 발급
+            refresh_token = RefreshToken.for_user(user)
+            data = {
+                'user_id': user.id,
+                'access_token': str(refresh_token.access_token),
+                'refresh_token': str(refresh_token)
+            }
+            
+            return Response(data, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "아이디 및 비밀번호가 유효하지가 않음요"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "아이디 및 비밀번호가 유효하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
 class LogoutView(APIView):
     def post(self, request):
         logout(request)
-        return Response({"message": "로그아웃 성공"}, status=status.HTTP_200_OK)
+        return Response({"message": "로그아웃 인가?"}, status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
-
     def get(self, request, username):
         user = get_object_or_404(CustomUser, username=username)
         serializer = UserSerializer(user)

@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
 
-
+    REQUIRED_FIELDS = ['name', 'nickname', 'birthday']
