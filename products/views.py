@@ -10,8 +10,8 @@ from .serializers import ProductSerializer
 
 
 class product_view(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
 
+    permission_classes = [IsAuthenticatedOrReadOnly]
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
@@ -26,7 +26,6 @@ class product_view(APIView):
 
 
 class detail_view(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
         return get_object_or_404(Product, pk=pk)
