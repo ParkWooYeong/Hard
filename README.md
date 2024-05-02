@@ -14,7 +14,8 @@
 **로그인**
 - endpoint : /api/accounts/login 
 - method : POST
-![로그인](https://github.com/ParkWooYeong/Hard/assets/159976056/5961eec3-b114-4014-be8e-fd5d65adfe36)
+![로그인](https://github.com/ParkWooYeong/Hard/assets/159976056/618769d4-8bfe-4b26-887a-aa3f7800d2f2)
+
 
 **로그아웃**
 - endpoint : /api/accounts/logout 
