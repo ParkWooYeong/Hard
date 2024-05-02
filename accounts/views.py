@@ -60,6 +60,8 @@ class LoginView(APIView):
         
 class LogoutView(APIView):
     def post(self, request):
+        token = RefreshToken(request.data.get('refresh'))
+        token.blacklist()
         logout(request)
         return Response({"message": "로그아웃 인가?"}, status=status.HTTP_200_OK)
 
