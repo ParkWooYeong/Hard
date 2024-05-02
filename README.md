@@ -7,7 +7,8 @@
 ![캡처](https://github.com/ParkWooYeong/Hard/assets/159976056/8bc39448-7279-4951-b42d-111a76e84bfc)
 
 **토큰 재발급**
-![Refresh토큰](https://github.com/ParkWooYeong/Hard/assets/159976056/69ebcb6b-f0d1-4bca-a1bc-67a126561189)
+![Refresh토큰a](https://github.com/ParkWooYeong/Hard/assets/159976056/d4ac51b2-0cc7-4baf-9076-adfda71c14de)
+
 
 
 **로그인**
