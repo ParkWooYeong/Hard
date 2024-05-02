@@ -21,6 +21,12 @@
 - method : GET
 ![프로필](https://github.com/ParkWooYeong/Hard/assets/159976056/09e56700-5212-41f5-93b2-9c9e826b33bd)
 
+**프로필 수정**
+- Endpoint : /api/accounts/<<str:username>> 
+- Method : PUT
+![프로필 수정](https://github.com/ParkWooYeong/Hard/assets/159976056/af8cafd0-ab7b-4497-9c2c-027d2e800404)
+
+
 ## products
 **상품 등록**
 - endpoint : /api/products

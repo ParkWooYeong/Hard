@@ -46,7 +46,7 @@ class LoginView(APIView):
         if user is not None:
             login(request, user)
             
-            # 토큰 발급
+            
             refresh_token = RefreshToken.for_user(user)
             data = {
                 'user_id': user.id,
@@ -56,7 +56,7 @@ class LoginView(APIView):
             
             return Response(data, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "아이디 및 비밀번호가 유효하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "아이디 및 비밀번호가 이상한데요?"}, status=status.HTTP_400_BAD_REQUEST)
         
 class LogoutView(APIView):
     def post(self, request):
@@ -64,6 +64,48 @@ class LogoutView(APIView):
         token.blacklist()
         logout(request)
         return Response({"message": "로그아웃 인가?"}, status=status.HTTP_200_OK)
+
+class ProfileUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, username):
+        user = get_object_or_404(CustomUser, username=username)
+
+        # 인증된 사용자가 프로필의 소유자인지 확인
+        if request.user != user:
+            return Response({"error": "권한 읍서요"}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            # 이메일 중복 확인
+            new_email = serializer.validated_data.get('email')
+            if new_email and CustomUser.objects.exclude(pk=user.pk).filter(email=new_email).exists():
+                return Response({"error": "이미 존재한 이메일이에요."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # 사용자명(ID)
+            new_username = serializer.validated_data.get('username')
+            if new_username and CustomUser.objects.exclude(pk=user.pk).filter(username=new_username).exists():
+                return Response({"error": "이미 존재한 아이디입니당."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # 이름
+            new_name = serializer.validated_data.get('name')
+            if new_name and CustomUser.objects.exclude(pk=user.pk).filter(name=new_name).exists():
+                return Response({"error": "이미 존재한 이름입니당."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # 닉네임
+            new_nickname = serializer.validated_data.get('nickname')
+            if new_nickname and CustomUser.objects.exclude(pk=user.pk).filter(name=new_nickname).exists():
+                return Response({"error": "이미 존재한 닉네임입니당."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # 생일
+            new_birthday = serializer.validated_data.get('birthday')
+            if new_birthday and CustomUser.objects.exclude(pk=user.pk).filter(birthday=new_birthday).exists():
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            
+
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
