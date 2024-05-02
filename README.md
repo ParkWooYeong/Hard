@@ -43,6 +43,7 @@
 ![삭제](https://github.com/ParkWooYeong/Hard/assets/159976056/6417819c-1689-4005-8c0c-85a01e9ccec4)
 
 # ERD
-![아니 이런가지고 drawio (1)](https://github.com/ParkWooYeong/Hard/assets/159976056/bf53065c-b4c9-4089-bc0e-92705775fa9e)
+![아니 이런가지고 drawio](https://github.com/ParkWooYeong/Hard/assets/159976056/ecb9712f-1648-4ba7-a168-3ba73a92b439)
+
 
 
