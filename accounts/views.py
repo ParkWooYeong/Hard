@@ -64,6 +64,8 @@ class LogoutView(APIView):
         return Response({"message": "로그아웃 인가?"}, status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, username):
         user = get_object_or_404(CustomUser, username=username)
         serializer = UserSerializer(user)
